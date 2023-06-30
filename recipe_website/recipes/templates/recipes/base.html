@@ -1,0 +1,108 @@
+{% load tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'recipes/css/base.css' %}" />
+
+    <meta name="viewport" content="width=device-width">
+    <meta name="format-detection" content="telephone-no">
+    <title>Recipe Book</title>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+
+            <a href="{% url 'home' %}"><img src="{% static 'recipes/images/logo.jpeg' %}" class="logo"> </a>
+
+            {% category as cats %}
+
+                <div class="categories-menu">Categories &bigtriangledown;
+                    <ul class="categories-list">
+                        {% for c in cats %}
+                            {% if cat_selected == c.slug %}
+                                <li class="selected">{{ c.name }}</li>
+                        {% else %}
+                        <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+                         {% endif %}
+                          {% endfor %}
+                    </ul>
+                </div>
+
+
+            <form class="search-bar" action="{% url 'home' %}" method="get">
+                <input  type="search" type="text" placeholder="Search" name="search">
+                <button type="submit"><img src="{% static 'recipes/images/search.png' %}"></button>
+            </form>
+            <div class="contacts">
+                <span>Contact us!</span>
+                <div>+00 000 123 45 67</div>
+                <div>+00 000 123 45 68</div>
+            </div>
+            <div class="quiz-button" id="quiz-btn">
+                What Dessert is Right for You? Find This Out!
+            </div>
+
+
+
+
+            <div class="sign-in-button">
+                {% if request.user.is_authenticated %}
+                <li>{{ user.user_name }} | <a href="{% url 'logout' %}">Sign Out</a></li>
+
+                {% for m in menu %}
+                <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+                {% endfor %}
+
+                {% else %}
+                <a href="{% url 'register' %}" class="last">Sign Up</a> | <a href="{% url 'login' %}">Sign In</a>
+                {% endif %}
+            </div>
+
+        </header>
+
+        <div class="block-container" id='dd'>
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <div class='quiz' id="quiz">
+            <div class="quiz-content" id="quiz">
+                <div class='quiz-question' id='question'>Question</div>
+                <ul id='answers'>
+                    <li class='quiz-option' id='a_text'>Answer</li>
+                    <li class='quiz-option' id='b_text'>Answer</li>
+                    <li class='quiz-option' id='c_text'>Answer</li>
+                </ul>
+            </div>
+        </div>
+        <div id="quiz-result" class="result">
+            <span>So. For You will be perfect such desserts as: </span>
+            <div id="quiz-img">
+            </div>
+            <div id="quiz-end" class="quiz-end"></div>
+            <button class="finish-button" id="endQuiz">Finish</button>
+        </div>
+
+        <footer class="footer">
+            <a href="{% url 'home' %}"><img src="{% static 'recipes/images/logo.jpeg' %}" class="logo"></a>
+            <div class="contacts">
+                <span>Contact us!</span>
+                <div>+00 000 123 45 67</div>
+                <div>+00 000 123 45 68</div>
+            </div>
+            <div class="channels">
+                <a href="https://uk-ua.facebook.com/" target="_blank"><img src="{% static 'recipes/images/facebook-icon.webp' %}"></a>
+                <a href="https://www.instagram.com/" target="_blank"><img src="{% static 'recipes/images/instagram-icon (1).webp' %}"></a>
+                <a href="https://twitter.com/?lang=uk" target="_blank"><img src="{% static 'recipes/images/twitter-icon.png' %}"></a>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript" src="{% static 'recipes/js/script.js' %}" defer ></script>
+</body>
+
+</html>

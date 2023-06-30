@@ -1,0 +1,557 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+body{height:100%;}
+.page-wrapper {
+    background: url('./background.jpg') fixed;
+    height: 100%;
+    line-height: 1;
+    color: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.logo, .categories-menu, .categories-list, .search-bar, .quiz-button, .sign-in-button, .block-image {
+    user-select: none;
+}
+
+.header {
+    background-color: rgb(24, 27, 24);
+    height: 4rem;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    top: 0;
+    position: sticky;
+    display: grid;
+    grid-template-areas:
+    'logo search categories contacts quiz sign-in';
+    grid-template-columns: 10% 25% 20% 15% 15% 15%;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    cursor: default;
+}
+
+.logo {
+    grid-area: logo;
+    width: 3.2rem;
+    height: 3.2rem;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+.logo:hover {
+    border: 3px solid rgb(197, 156, 69);
+    cursor: pointer;
+    transition: .1s;
+    transform: scale(1.1);
+}
+.logo:active {
+    border: 3px solid rgb(120, 96, 50);
+}
+
+.categories-menu {
+    grid-area: categories;
+    position: absolute;
+}
+.categories-menu:hover {
+    color: rgb(197, 156, 69);
+    border: 1px solid #fff;
+    border-radius: 10px;
+    padding: 20px;
+    justify-items: center;
+}
+.categories-menu:hover > ul {
+    display: initial;
+}
+.categories-list {
+    background-color: rgb(24, 27, 24);
+    display: none;
+    position: absolute;
+    min-width: 100%;
+    margin: 27% 0 0 -86%;
+    padding: 5px 15% 5px 10%;
+    border: 1px solid #FFF;
+    border-radius: 5%;
+    list-style: none;
+}
+.categories-list a {
+    text-decoration: none;
+    color: #fff;
+    line-height: 1.5;
+}
+.categories-list a:hover {
+    color: rgb(197, 156, 69);
+}
+.categories-list a:active {
+    color: rgb(120, 96, 50);
+}
+
+.search-bar {
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 15px;
+    grid: search;
+    padding: 5px 5px 5px 10px;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+.search-bar img{
+    width: 20px;
+    height: 20px;
+    cursor: default;
+}
+.search-bar button {
+    padding-right: 2px;
+    cursor: pointer;
+    border: 0;
+    background-color: #fff;
+}
+.search-bar input {
+    color: #000;
+    background: transparent;
+    width: 100%;
+    border: none;
+    outline: 0;
+}
+.search-bar:hover {
+    border: 2px solid rgb(197, 156, 69);
+}
+
+.quiz-button {
+    grid-area: quiz;
+    cursor: pointer;
+    line-height: 1.1;
+}
+.quiz-button:hover {
+    color: rgb(197, 156, 69);
+}
+.quiz-button:active {
+    color: rgb(120, 96, 50);
+}
+
+.contacts {
+    grid-area: contacts;
+    font-size: 15px;
+    text-align: center;
+    line-height: 1.2;
+}
+.contacts span {
+    user-select: none;
+}
+
+.sign-in-button {
+    grid-area: sign-in;
+    line-height: 1.2;
+    list-style: none;
+}
+
+.sign-in-button a {
+    text-decoration: none;
+    color: #fff;
+}
+.sign-in-button a:hover {
+    color: rgb(197, 156, 69);
+    cursor: pointer;
+}
+.sign-in-button a:active {
+    color: rgb(120, 96, 50);
+}
+
+.block-container {
+    max-width: 1270px;
+    padding: 20px;
+    margin: 0 auto;
+    background: rgb(197, 156, 69);
+    display: flow-root;
+    min-height: 100vh;
+}
+.block {
+    padding: 10px;
+    background-color: rgb(24, 27, 24);
+    max-width: 32%;
+    min-width: 20%;
+    height: 20rem;
+    border: 1px solid;
+    float: left;
+    margin: 8px;
+    border-radius: 15px;
+    box-shadow: -2px 4px 5px  #000;
+    cursor: default;
+}
+.block:hover {
+    padding: 7px 7px 7px 7px;
+    box-shadow: -2px 5px 5px  #000;
+    border: 1px solid rgb(56, 50, 50);
+}
+.block-title {
+    display: block;
+    font-size: 22px;
+    margin: 10px 0px 10px 0px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #FFF;
+}
+.block-title:hover {
+    color: rgb(197, 156, 69);
+}
+.block-title:active {
+    color: rgb(120, 96, 50);
+}
+.block-categories {
+    display: inline-block;
+    background-color: rgb(60, 60, 60);
+    border-radius: 20px;
+    border: 1px solid rgb(56, 50, 50);
+    height: 20px;
+    max-width: 150px;
+    padding: 3px 5px 22px 5px;
+    margin: 5px 5px 10px 5px;
+}
+.block-categories:hover {
+    color: rgb(197, 156, 69);
+    cursor: pointer;
+}
+.block-categories:active {
+    color: rgb(120, 96, 50);
+}
+.block-content {
+    font-size: 16px;
+    line-height: 130%;
+    display: block;
+}
+.block-image {
+    width: 150px;
+    height: 150px;
+    padding: 0;
+    border: 1px solid #FFF;
+    float: left;
+    border-radius: 50%;
+    margin: 5px 10px 5px 5px;
+}
+
+.footer {
+    background-color: rgb(24, 27, 24);
+    height: 4rem;
+    width: 100%;
+    border-top: 1px solid #fff;
+    display: grid;
+    grid-template-areas:
+    'logo contacts channels';
+    grid-template-columns: 10% 25% 65%;
+    align-items: center;
+    justify-items: center;
+    cursor: default;
+}
+.channels {
+    grid-area: channels;
+    padding-left: 50%;
+}
+.channels a {
+    padding: 5px;
+    cursor: default;
+}
+.channels img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.channels img:hover {
+    border: 2px solid rgb(197, 156, 69);
+}
+.channels img:active {
+    border: 3px solid rgb(120, 96, 50);
+}
+
+.quiz {
+    background: rgb(197, 156, 69);
+    display: none;
+    margin: 0 auto;
+    max-width: 1270px;
+    min-height: 100vh;
+    padding: 20px;
+}
+.quiz-question {
+    background-color: rgb(24, 27, 24);
+    border: 1px solid;
+    border-radius: 15px;
+    box-shadow: -2px 4px 5px  #000;
+    cursor: default;
+    font-size: 140%;
+    height: 100%;
+    padding: 10px;
+    width: 100%;
+}
+.quiz-option {
+    align-content: center;
+    cursor: default;
+    font-size: 120%;
+    line-height: 10%;
+    list-style: none;
+    margin-top: 10%;
+    padding: 10px;
+    user-select: none;
+    width: 50%;
+}
+.quiz-option:hover {
+    color: rgb(120, 96, 50);
+}
+.quiz-option:active {
+    color: rgb(24, 27, 24);
+}
+.result {
+    background: rgb(197, 156, 69);
+    display: none;
+    margin: 0 auto;
+    max-width: 1270px;
+    min-height: 100vh;
+    padding: 20px;
+}
+.result span {
+    background-color: rgb(24, 27, 24);
+    border: 1px solid;
+    border-radius: 15px;
+    box-shadow: -2px 4px 5px  #000;
+    cursor: default;
+    font-size: 140%;
+    height: 100%;
+    padding: 10px;
+    width: 100%;
+}
+.result img {
+    border: 2px solid rgb(24, 27, 24);
+    border-radius: 50%;
+    height: 150px;
+    margin: 3% 0 0 0;
+    width: 150px;
+    user-select: none;
+}
+.quiz-end {
+    align-content: center;
+    cursor: default;
+    font-size: 110%;
+    line-height: 10%;
+    list-style: none;
+    margin-top: 1%;
+    padding: 10px 0;
+    user-select: none;
+    width: 100%;
+}
+.finish-button {
+    background-color: rgb(24, 27, 24);
+    border: 1px solid;
+    border-radius: 15px;
+    box-shadow: -2px 4px 5px  #000;
+    color: #fff;
+    cursor: default;
+    font-size: 110%;
+    height: 120%;
+    margin-top: 1%;
+    padding: 5px;
+    user-select: none;
+    width: 10%;
+}
+.finish-button:hover {
+    color: rgb(197, 156, 69);
+}
+.finish-button:active {
+    color: rgb(120, 96, 50);
+}
+.quiz-button {
+    display: initial;
+}
+
+.sign-up-form {
+    padding: 1%;
+    background: rgb(24, 27, 24);
+    border: solid 1px #fff;
+    border-radius: 15px;
+    display: flex;
+    width: 40%;
+    height: 200px;
+}
+.sign-up-form:hover {
+    box-shadow: -2px 5px 5px  #000;
+    border: 1px solid rgb(56, 50, 50);
+}
+.sign-up-title {
+    font-size: 120%;
+    margin: 1%;
+}
+.sign-up-field-title {
+    color:  rgb(197, 156, 69);
+    font-size: 105%;
+    padding: 1%;
+}
+.sign-up-field-title input{
+    margin: 5px 0;
+    border-radius: 10px;
+}
+.sign-up-btn {
+    background-color: rgb(24, 27, 24);
+    color: #fff;
+    width: 100%;
+    border: 1px solid #FFF;
+    border-radius: 10px;
+    padding: 1%;
+    margin-top: 10px;
+    width: 30%;
+    height: 15%;
+    margin: 5% 0 0 25%;
+}
+.sign-up-btn:hover {
+    color: rgb(197, 156, 69);
+    border: 1px solid rgb(197, 156, 69);
+}
+.sign-up-btn:active {
+    color: rgb(120, 96, 50); 
+    border: 1px solid rgb(120, 96, 50);
+}
+
+.sign-in-form {
+    padding: 1%;
+    background: rgb(24, 27, 24);
+    border: solid 1px #fff;
+    border-radius: 15px;
+    width: 40%;
+    height: 200px;
+    color:  rgb(197, 156, 69);
+}
+.sign-in-form:hover {
+    box-shadow: -2px 5px 5px  #000;
+    border: 1px solid rgb(56, 50, 50);
+}
+.sign-in-form input{
+    margin: 10px 0;
+    border-radius: 10px;
+}
+.sign-in-btn {
+    background-color: rgb(24, 27, 24);
+    color: #fff;
+    border: 1px solid #FFF;
+    border-radius: 10px;
+    padding: 1%;
+    margin-top: 10px;
+    width: 35%;
+    height: 15%;
+}
+.sign-in-btn:hover {
+    color: rgb(197, 156, 69);
+    border: 1px solid rgb(197, 156, 69);
+}
+.sign-in-btn:active {
+    color: rgb(120, 96, 50); 
+    border: 1px solid rgb(120, 96, 50);
+}
+
+.adding-recipe-form {
+    padding: 15px 20px;
+    background: rgb(24, 27, 24);
+    border: solid 1px #fff;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%; 
+}
+.adding-recipe-form input {
+    margin: 10px 0;
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+.adding-recipe-form input:hover {
+    border: 2px solid rgb(197, 156, 69);
+}
+.adding-recipe-form textarea, select  {
+    border: 2px solid #fff;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+.adding-recipe-form textarea, select:hover {
+    border: 2px solid rgb(197, 156, 69);
+}
+.adding-recipe-form:hover {
+    box-shadow: -2px 5px 5px  #000;
+    border: 1px solid rgb(56, 50, 50);
+}
+.adding-recipe-form-submit-btn  {
+    background-color: rgb(24, 27, 24);
+    color: #fff;
+    border: 1px solid #FFF;
+    border-radius: 10px;
+    padding: 1%;
+    margin-top: 10px;
+    width: 35%;
+    height: 15%;
+    font-size: 110%;
+}
+.adding-recipe-form-submit-btn:hover {
+    border: 1px solid rgb(197, 156, 69);
+    color: rgb(197, 156, 69);
+}
+.adding-recipe-form-submit-btn:active {
+    color: rgb(120, 96, 50); 
+    border: 1px solid rgb(120, 96, 50);
+}
+
+.paginator ul {
+    padding: 10px;
+    color: rgb(24, 27, 24);
+    list-style: none; 
+    display: flex;
+    justify-content: center;
+    font-size: 120%;
+}
+.paginator ul, a {
+    color: rgb(24, 27, 24);
+    text-decoration: none;
+    list-style: none;
+}
+.paginator li {
+    padding: 5px 15px;
+    cursor: pointer;
+}
+.paginator li:hover, a:hover {
+    color: rgb(120, 96, 50);
+}
+.paginator li:active, a:active {
+    color: #000;
+}
+.page-num-page-num-selected {
+    color: #fff;
+}
+
+.recipe-container {
+    padding: 10px 10px 30px 10px;
+    background-color: rgb(24, 27, 24);
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    margin: 8px;
+    border-radius: 15px;
+    box-shadow: -2px 4px 5px  #000;
+    cursor: default;
+    font-size: 110%;
+    line-height: 1.3;
+}
+.recipe-container h2 {
+    width: 100%;
+    padding: 1% 30% 2% 30%;
+}
+.recipe {
+    display: flex;
+}
+.recipe img{
+   border: 1px solid #fff;
+   border-radius: 10%;
+   margin: 2%;
+}
+.recipe-text {
+    margin: 1% 2%;
+}
+.recipe-text h3 {
+    margin: 1% 0;
+    padding: 1rem 2px;
+}

@@ -1,0 +1,18 @@
+{% extends 'recipes./base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form action="{% url 'add-page' %}" method="post" enctype="multipart/form-data" class="adding-recipe-form">
+    {% csrf_token %}
+
+     <div class="form_error">{{ form.non_field_errors }}</div>
+<div>
+    {{ form|crispy }}
+</div>
+
+
+<div class="form-error">{{ form.errors }}</div>
+
+    <button type="submit" class="adding-recipe-form-submit-btn">Submit</button>
+</form>
+{% endblock %}

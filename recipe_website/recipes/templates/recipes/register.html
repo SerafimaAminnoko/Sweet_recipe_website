@@ -1,0 +1,17 @@
+{% extends 'recipes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 class="sign-up-title">{{ title }}</h1>
+
+<form method="post" class="sign-up-form">
+    {% csrf_token %}
+<div class="sign-up-field-title">
+    {{ form|crispy }}
+</div>
+<div class="form-error">{{ form.errors }}</div>
+
+    <button type="submit" class="sign-up-btn">Sign Up</button>
+</form>
+
+{% endblock %}

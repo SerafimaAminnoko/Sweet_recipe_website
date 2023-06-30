@@ -1,0 +1,6 @@
+{% extends 'recipes/base.html' %}
+{% load tags %}
+
+{% block content %}
+{% get_recipes_by_category request cat_slug=cat_selected %}
+{% endblock %}

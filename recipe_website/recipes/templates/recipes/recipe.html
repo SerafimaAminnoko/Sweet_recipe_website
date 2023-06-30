@@ -1,0 +1,19 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+<div class="recipe-container">
+  <h2>{{ title }}</h2>
+  <div class="recipe">
+  <div>
+    {% if recipe.photo %}
+    <img class="left" src="{{ recipe.photo.url }}" height="300">
+    {% endif %}
+  </div>
+  <div class="recipe-text">
+    <div>{{ recipe.description|linebreaks }}</div>
+    <h3>Recipe:</h3>
+    <p>{{ recipe.recipe|linebreaks }}</p>
+  </div>
+</div>
+</div>
+{% endblock %}
