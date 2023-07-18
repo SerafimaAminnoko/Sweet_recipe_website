@@ -1,68 +1,91 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 
 from .forms import *
 from .models import *
-
-menu = [{'title': 'Add Page', 'url_name': 'add-page'},
-
-]
+from .utils import *
 
 
-def main(request):
-    context = {
-        'menu': menu,
-        'cat_selected': 0,
-    }
-    return render(request, 'recipes/main.html', context=context)
+class MainPage(DataMixin, ListView):
+    model = Recipes
+    template_name = 'recipes/main.html'
+    context_object_name = 'recipes'
+
+    def get_queryset(self):
+        return Recipes.objects.filter(is_published=True)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context()
+        return dict(list(c_def.items()) + list(context.items()))
 
 
-def add_page(request):
-    if request.method == 'POST':
-        form = AddPostForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = AddPostForm()
-    context = {
-        'form': form,
-        'menu': menu,
+class Search(DataMixin, ListView):
+    model = Recipes
+    template_name = 'recipes/main.html'
+    context_object_name = 'recipes'
 
-    }
-    return render(request, 'recipes/addpage.html', context=context)
+    def get_queryset(self):
+        search_query = self.request.GET.get('q', '')
+        if search_query:
+            return Recipes.objects.filter(Q(title__icontains=search_query, is_published=True) | Q(recipe__icontains=search_query, is_published=True))
 
-
-def show_category(request, cat_slug):
-    context = {
-        'menu': menu,
-        'title': "selection by rubric",
-        'cat_selected': cat_slug
-    }
-    return render(request, 'recipes/main.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = f'q={self.request.GET.get("q")}&'
+        c_def = self.get_user_context()
+        return dict(list(c_def.items()) + list(context.items()))
 
 
-def show_recipe(request, rec_slug):
-    recipe = get_object_or_404(Recipes, slug=rec_slug)
-    context = {
-        'recipe': recipe,
-        'menu': menu,
-        'title': recipe.title,
-        'cat_selected': recipe.cat,
-    }
-    return render(request, 'recipes/recipe.html', context=context)
+class ShowCategory(DataMixin, ListView):
+    model = Recipes
+    template_name = 'recipes/main.html'
+    context_object_name = 'recipes'
+
+    def get_queryset(self):
+        return Recipes.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cat = Category.objects.get(slug=self.kwargs['cat_slug'])
+        context['cat_selected'] = cat.slug
+        c_def = self.get_user_context()
+        return dict(list(c_def.items()) + list(context.items()))
+
+
+class AddRecipe(DataMixin, CreateView):
+    form_class = AddPostForm
+    template_name = 'recipes/addpage.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context()
+        return dict(list(c_def.items()) + list(context.items()))
+
+
+class ShowRecipe(DataMixin, DetailView):
+    model = Recipes
+    template_name = 'recipes/recipe.html'
+    context_object_name = 'recipe'
+    slug_url_kwarg = 'rec_slug'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context()
+        return dict(list(c_def.items()) + list(context.items()))
 
 
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'recipes/register.html'
     success_url = reverse_lazy('login')
-    extra_context = {'menu': menu,}
 
     def form_valid(self, form):
         user = form.save()

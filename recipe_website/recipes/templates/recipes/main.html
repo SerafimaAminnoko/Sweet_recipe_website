@@ -2,5 +2,25 @@
 {% load tags %}
 
 {% block content %}
-{% get_recipes_by_category request cat_slug=cat_selected %}
+
+{% for recipe in recipes %}
+<div class="block">
+
+    <a href="{{ recipe.get_absolute_url }}" class="block-title">{{ recipe.title }}</a>
+    <div class="block-content">
+        {% if recipe.photo %}
+        <img src="{{ recipe.photo.url }}" class="block-image" />
+        {% endif %}
+        {% for category in recipe.cat.all %}
+        <div class="block-categories">
+            <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+        </div>
+        {% endfor %}
+        <p>
+            {{ recipe.description|linebreaks|truncatewords:50 }}
+        </p>
+    </div>
+
+</div>
+{% endfor %}
 {% endblock %}

@@ -29,7 +29,7 @@ class Recipes(models.Model):
     time_create = models.TimeField(auto_now_add=True)
     time_update = models.TimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
-    cat = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, related_name='category')
+    cat = models.ManyToManyField(Category,)
 
     class Meta:
         verbose_name = 'Recipes'

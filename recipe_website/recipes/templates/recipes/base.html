@@ -6,72 +6,124 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="{% static 'recipes/css/base.css' %}" />
-
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0">
     <meta name="format-detection" content="telephone-no">
-    <title>Recipe Book</title>
+    <title>Recipes Book</title>
+    <link rel="stylesheet" href="{% static 'recipes/css/index.css' %}" />
 </head>
 
 <body>
-    <div class="page-wrapper">
-        <header class="header">
-
-            <a href="{% url 'home' %}"><img src="{% static 'recipes/images/logo.jpeg' %}" class="logo"> </a>
-
-            {% category as cats %}
-
+    <div class="page-wrapper" id="page-wrapper">
+        <header>
+            <div class="header">
+                <a href="{% url 'home' %}"><img src="{% static 'recipes/images/logo.jpeg' %}" class="logo"> </a>
+                {% category as cats %}
                 <div class="categories-menu">Categories &bigtriangledown;
                     <ul class="categories-list">
                         {% for c in cats %}
-                            {% if cat_selected == c.slug %}
-                                <li class="selected">{{ c.name }}</li>
+                        {% if c.slug == cat_selected %}
+                        <li class="selected">{{ c.name }}</li>
                         {% else %}
                         <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
-                         {% endif %}
-                          {% endfor %}
+                        {% endif %}
+                        {% endfor %}
                     </ul>
                 </div>
-
-
-            <form class="search-bar" action="{% url 'home' %}" method="get">
-                <input  type="search" type="text" placeholder="Search" name="search">
-                <button type="submit"><img src="{% static 'recipes/images/search.png' %}"></button>
-            </form>
-            <div class="contacts">
-                <span>Contact us!</span>
-                <div>+00 000 123 45 67</div>
-                <div>+00 000 123 45 68</div>
+                <form class="search-bar" action="{% url 'search' %}" method="get">
+                    <input type="search" type="text" placeholder="Search" name="q">
+                    <button type="submit"><img src="{% static 'recipes/images/search.png' %}"></button>
+                </form>
+                <div class="contacts">
+                    <span>Contact us!</span>
+                    <div>+00 000 123 45 67</div>
+                    <div>+00 000 123 45 68</div>
+                </div>
+                <div class="quiz-button" id="quiz-btn">
+                    What Dessert is Right for You? Find This Out!
+                </div>
+                <div class="sign-in-button">
+                    {% if request.user.is_authenticated %}
+                    <li>{{ user.user_name }}<a href="{% url 'logout' %}">Sign Out</a> | </li>
+                    {% for m in menu %}
+                    <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+                    {% endfor %}
+                    {% else %}
+                    <a href="{% url 'register' %}" class="last">Sign Up</a> | <a href="{% url 'login' %}">Sign In</a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="quiz-button" id="quiz-btn">
-                What Dessert is Right for You? Find This Out!
+            <div class="header-mobile">
+                <a href="{% url 'home' %}"><img src="{% static 'recipes/images/logo.jpeg' %}" class="moblogo"></a>
+                {% category as cats %}
+                <form class="search-bar" action="{% url 'search' %}" method="get">
+                    <input type="search" type="text" placeholder="Search" name="q">
+                    <button type="submit"><img src="{% static 'recipes/images/search.png' %}"></button>
+                </form>
+                <div class="mob-menu">
+                    <img class="mob-menu-icon" src="{% static 'recipes/images/menu-icon.png' %}">
+                    <ul class="mob-menu-list">
+                        {% if request.user.is_authenticated %}
+                        <li>{{ user.user_name }} | <a href="{% url 'logout' %}">Sign Out</a></li>
+                        {% for m in menu %}
+                        <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+                        {% endfor %}
+                        {% else %}
+                        <a href="{% url 'register' %}" class="last">Sign Up</a> | <a href="{% url 'login' %}">Sign
+                            In</a>
+                        {% endif %}
+                        <li class="mob-menu-categories">Categories &bigtriangledown;
+                            <ul class="mob-menu-categories-list">
+                                {% for c in cats %}
+                                {% if c.slug == cat_selected %}
+                                <li class="selected">{{ c.name }}</li>
+                                {% else %}
+                                <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li>
+                            <div id="mob-quiz-btn">See which dessert is best for You!</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-
-
-
-            <div class="sign-in-button">
-                {% if request.user.is_authenticated %}
-                <li>{{ user.user_name }} | <a href="{% url 'logout' %}">Sign Out</a></li>
-
-                {% for m in menu %}
-                <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                {% endfor %}
-
-                {% else %}
-                <a href="{% url 'register' %}" class="last">Sign Up</a> | <a href="{% url 'login' %}">Sign In</a>
-                {% endif %}
-            </div>
-
         </header>
 
-        <div class="block-container" id='dd'>
-            {% block content %}
-            {% endblock %}
+        <div class="block-container" id="dd">
+           
+                {% block content %}
+                {% endblock %}
+            
+            <div class="paginator">
+                <nav>
+                    <ul>
+                        {% if page_obj.has_previous %}
+                        <li>
+                            <a href="?{{ q }}&page={{ page_obj.previous_page_number }}">&lt;</a>
+                        </li>
+                        {% endif %}
+                        {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                        <li class="page-num-page-num-selected">
+                            {{ p }}
+                        </li>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %} <li>
+                            <a href="?{{ q }}page={{ p }}">{{ p }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <li>
+                                <a href="?{{ q }}page={{ page_obj.next_page_number }}">&gt;</a>
+                            </li>
+                            {% endif %}
+                    </ul>
+                </nav>
+            </div>
         </div>
-
         <div class='quiz' id="quiz">
-            <div class="quiz-content" id="quiz">
+            <div>
                 <div class='quiz-question' id='question'>Question</div>
                 <ul id='answers'>
                     <li class='quiz-option' id='a_text'>Answer</li>
@@ -87,22 +139,24 @@
             <div id="quiz-end" class="quiz-end"></div>
             <button class="finish-button" id="endQuiz">Finish</button>
         </div>
-
         <footer class="footer">
             <a href="{% url 'home' %}"><img src="{% static 'recipes/images/logo.jpeg' %}" class="logo"></a>
             <div class="contacts">
                 <span>Contact us!</span>
-                <div>+00 000 123 45 67</div>
-                <div>+00 000 123 45 68</div>
+                <span>+00 000 123 45 67</span>
+                <span>+00 000 123 45 68</span>
             </div>
             <div class="channels">
-                <a href="https://uk-ua.facebook.com/" target="_blank"><img src="{% static 'recipes/images/facebook-icon.webp' %}"></a>
-                <a href="https://www.instagram.com/" target="_blank"><img src="{% static 'recipes/images/instagram-icon (1).webp' %}"></a>
-                <a href="https://twitter.com/?lang=uk" target="_blank"><img src="{% static 'recipes/images/twitter-icon.png' %}"></a>
+                <a href="https://uk-ua.facebook.com/" target="_blank"><img
+                        src="{% static 'recipes/images/facebook-icon.webp' %}"></a>
+                <a href="https://www.instagram.com/" target="_blank"><img
+                        src="{% static 'recipes/images/instagram-icon (1).webp' %}"></a>
+                <a href="https://twitter.com/?lang=uk" target="_blank"><img
+                        src="{% static 'recipes/images/twitter-icon.png' %}"></a>
             </div>
         </footer>
     </div>
-    <script type="text/javascript" src="{% static 'recipes/js/script.js' %}" defer ></script>
+    <script type="text/javascript" src="{% static 'recipes/js/script.js' %}" defer></script>
 </body>
 
 </html>

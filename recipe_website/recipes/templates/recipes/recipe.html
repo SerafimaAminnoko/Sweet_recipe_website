@@ -2,11 +2,18 @@
 
 {% block content %}
 <div class="recipe-container">
-  <h2>{{ title }}</h2>
-  <div class="recipe">
-  <div>
+  <h2 class="recipe-title">
+    {{ recipe.title }}
+  </h2>
+  {% for category in recipe.cat.all %}
+  <div class="recipe-categories">
+    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+  </div>
+  {% endfor %}
+
+  <div class="recipe-image">
     {% if recipe.photo %}
-    <img class="left" src="{{ recipe.photo.url }}" height="300">
+    <img src="{{ recipe.photo.url }}" height="300">
     {% endif %}
   </div>
   <div class="recipe-text">
@@ -14,6 +21,6 @@
     <h3>Recipe:</h3>
     <p>{{ recipe.recipe|linebreaks }}</p>
   </div>
-</div>
+
 </div>
 {% endblock %}
