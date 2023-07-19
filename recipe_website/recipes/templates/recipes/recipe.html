@@ -10,17 +10,15 @@
     <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
   </div>
   {% endfor %}
-
-  <div class="recipe-image">
-    {% if recipe.photo %}
-    <img src="{{ recipe.photo.url }}" height="300">
-    {% endif %}
-  </div>
-  <div class="recipe-text">
-    <div>{{ recipe.description|linebreaks }}</div>
-    <h3>Recipe:</h3>
-    <p>{{ recipe.recipe|linebreaks }}</p>
-  </div>
-
+    <div class="recipe-image">
+      {% if recipe.photo %}
+      <img src="{{ recipe.photo.url }}" height="300">
+      {% endif %}
+    </div>
+    <div class="recipe-text">
+      <div>{{ recipe.description|linebreaks }}</div>
+      <h3>Recipe:</h3>
+      <p>{{ recipe.recipe|linebreaks }}</p>
+    </div>
 </div>
 {% endblock %}

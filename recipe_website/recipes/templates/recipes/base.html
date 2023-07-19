@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale = 1.0">
     <meta name="format-detection" content="telephone-no">
     <title>Recipes Book</title>
-    <link rel="stylesheet" href="{% static 'recipes/css/index.css' %}" />
+    <link type="text/css"  href="{% static 'recipes/css/index.css' %}" rel="stylesheet"/>
 </head>
 
 <body>
@@ -91,10 +91,10 @@
         </header>
 
         <div class="block-container" id="dd">
-           
+            <div class="block-wrapper">
                 {% block content %}
                 {% endblock %}
-            
+            </div>
             <div class="paginator">
                 <nav>
                     <ul>
@@ -122,6 +122,7 @@
                 </nav>
             </div>
         </div>
+
         <div class='quiz' id="quiz">
             <div>
                 <div class='quiz-question' id='question'>Question</div>

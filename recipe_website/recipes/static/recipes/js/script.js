@@ -49,9 +49,9 @@ const results = [
         `<div id="quiz-end" class="quiz-end">Kyiv Cake, Apples Biscuit, Baklava, Sorbet.</div>`,
     ],
     image = [
-        `<div id="quiz-img"><img id="result-img1" src="./quiz1.jpg" /></div>`,
-        `<div id="quiz-img"><img id="result-img1" src="./quiz2.jpg"/></div>`,
-        `<div id="quiz-img"><img id="result-img1" src="./quiz3.jpg" /></div>`,
+        `<div id="quiz-img"><img id="result-img1" src="https://github.com/SonirAster/Sweet-Recipes-Book/blob/main/quiz1.jpg?raw=true" /></div>`,
+        `<div id="quiz-img"><img id="result-img1" src="https://github.com/SonirAster/Sweet-Recipes-Book/blob/main/quiz2.jpg?raw=true"/></div>`,
+        `<div id="quiz-img"><img id="result-img1" src="https://github.com/SonirAster/Sweet-Recipes-Book/blob/main/quiz3.jpg?raw=true" /></div>`,
     ],
 ];
 
